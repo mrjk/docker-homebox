@@ -1,4 +1,8 @@
-# Personal image working image
+# Homebox - Your personal development environment in a docker
+
+This project aims to provide a ssh accessible container for developper with many troubleshooting and useful utils. It support permanent home.
+
+Source project on github: [mrjk/docker-homebox](https://github.com/mrjk/docker-homebox/)
 
 ## Quickstart
 
@@ -29,5 +33,15 @@ Todo:
 - Support rootless container
 - Cleanup project
 
+
+## Usage
+
+This image is designed to be used as regular user. You are supposed to access it via SSH port. 
+While this image provides a sudo access, to make persistant installation, you need to install it
+in your home. Homebrew and mise are provided for conveniance.
+
+## Custom build
+
+This image comes with a generic user, you may want to customize the image.
 
 

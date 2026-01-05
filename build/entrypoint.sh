@@ -41,6 +41,21 @@ if [ -n "$ssh_authorized_keys" ]; then
     chown -R $app_user_id:$app_group_id "$SSH_DIR"
 fi
 
+# Fix docker permissions for regular user
+DOCKER_SOCK="/var/run/docker.sock"
+if [ -S "$DOCKER_SOCK" ]; then
+    DOCKER_GID=$(stat -c '%g' "$DOCKER_SOCK")
+
+    if ! getent group docker >/dev/null; then
+        groupadd -g "$DOCKER_GID" docker
+    else
+        groupmod -g "$DOCKER_GID" docker
+    fi
+
+    usermod -aG docker $app_username
+fi
+
+
 # Parse init.ini config file
 if [ -f /etc/init.ini ]; then
     echo "Reading init.ini configuration..."

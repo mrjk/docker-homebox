@@ -23,7 +23,7 @@ docker compose exec -ti -u $app_username user_debian /bin/bash
 - provide common tools such as git, rsync, vim and more
 - Customizable user build/init script
 - Deployable as docker compose
-
+- docker client with docker compose
 
 Todo:
 - Support rootless container

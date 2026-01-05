@@ -40,6 +40,7 @@ RUN apt-get update && apt-get install -y \
     openssh-server \
     rsync \
     sudo \
+    gnupg \
     build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -69,6 +70,21 @@ RUN mkdir -p /var/run/sshd /scripts /mnt && \
 # Copy entrypoint script
 COPY build/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+# Dynamic APPS: docker client with compose
+RUN install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg \
+      | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    chmod a+r /etc/apt/keyrings/docker.gpg
+RUN echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+    https://download.docker.com/linux/debian trixie stable" \
+    > /etc/apt/sources.list.d/docker.list
+RUN apt-get update && apt-get install -y \
+    docker-ce-cli \
+    docker-compose-plugin \
+    && rm -rf /var/lib/apt/lists/*
+
 
 # Dynamic scripts
 WORKDIR /home/$app_username

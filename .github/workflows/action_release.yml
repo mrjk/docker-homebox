@@ -1,0 +1,41 @@
+name: Pipeline - Release version
+
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+
+
+permissions:
+  id-token: write
+  contents: write
+  actions: write
+
+jobs:
+
+  release-semver:
+    uses: ./.github/workflows/job_release_semantic.yml
+    secrets: inherit
+
+  release-dockerhub:
+    needs: release-semver
+    if: needs.release-semver.outputs.released == 'true'
+    uses: ./.github/workflows/job_dockerhub_publish.yml
+    with:
+      ref: "v${{ needs.release-semver.outputs.version }}"
+    secrets: inherit
+
+  release-dockerhub-readme:
+    needs: release-dockerhub
+    if: needs.release-semver.outputs.released == 'true'
+    uses: ./.github/workflows/job_dockerhub_readme.yml
+    with:
+      ref: "v${{ needs.release-semver.outputs.version }}"
+      dockerhub_username: "${{ vars.DOCKERHUB_USERNAME }}"
+    secrets: inherit  
+
+  

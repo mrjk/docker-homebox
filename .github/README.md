@@ -7,9 +7,16 @@ Rules:
   * Build and increment release
   * Publish stable
   * Need `git rebase` after each commit on `main`
-* Anything commited on other branches will build and release
+* Anything commited on `dev` will trigger a unstable release
   * Build
   * Publish develop
+* Anything commited on other branches will do nothing
+
+Rebuild is disabled on some files, such as `*.md`
+
+On github UI, you can run two jobs:
+* CI: Run CI and build
+* Publish: Run CI and publish version to dockerhub
 
 ## Setup
 

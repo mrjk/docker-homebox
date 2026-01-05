@@ -1,0 +1,75 @@
+# https://taskfile.dev
+
+version: '3'
+
+dotenv:
+  - .env
+
+tasks:
+  default:
+    desc: List all commands
+    cmds:
+      - task --list-all
+    silent: true
+
+  # Build commands
+  # =========================
+
+  build:
+    desc: Build images
+    cmds:
+      - docker compose --progress plain build
+
+  recreate:
+    desc: Redeploy stack
+    cmds:
+      - docker compose down
+      - docker compose up -d
+
+  upgrade:
+    desc: Rebuild and apply if necessary changes 
+    cmds:
+      - task: build
+      - docker compose up -d
+
+  run:
+    desc: Run ephemeral container shell (via run)
+    cmds:
+      - docker compose run --rm -ti -u $app_username user_debian /bin/bash
+
+  run-root:
+    desc: Run ephemeral container root shell (via run)
+    cmds:
+      - docker compose run --rm -ti -u root --entrypoint /bin/bash  user_debian
+
+
+  # Lifecycle commands
+  # =========================
+  down:
+    desc: Down the stack
+    cmds:
+      - docker compose down
+
+  up:
+    desc: Up the stack
+    cmds:
+      - docker compose up -d
+
+  # Runtime commands
+  # =========================
+  logs:
+    desc: Show live logs
+    cmds:
+      - docker compose logs -f
+
+  connect:
+    desc: Enter in current instance (via exec)
+    cmds:
+      - cmd: docker compose exec -ti -u $app_username user_debian /bin/bash
+        ignore_error: true
+  connect-root:
+    desc: Enter in current instance as root (via exec)
+    cmds:
+      - cmd: docker compose exec -ti -u root  user_debian /bin/bash
+        ignore_error: true
+

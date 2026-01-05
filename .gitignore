@@ -1,2 +1,4 @@
-.env
+.envrc
+.env.overrides
 data/**
+custom.*

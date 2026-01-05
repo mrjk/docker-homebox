@@ -1,29 +1,42 @@
+x-features:
+  app_username: $app_username
+  app_user_id: ${app_user_id}
+  app_group_id: ${app_group_id}
+  app_expose_port_ssh: $app_expose_port_ssh
+x-infos:
+  connect: |
+    ssh -p $app_expose_port_ssh $app_username@$app_expose_ip
 
 services:
   user_debian:
     build:
       context: .
       dockerfile: ./build/Dockerfile
+      tags:
+        - "docker-homebox-debian:latest"
+        - "docker-homebox-debian:${app_username}-latest"
+      labels:
+        org.jeznet.description: "User container"
       args:
         app_username: ${app_username}
         app_user_id: ${app_user_id}
         app_group_id: ${app_group_id}
-    hostname: $app_username-debian
+
+    hostname: ${app_username}-debian
     environment:
-      - SSH_AUTH_SOCK=/run/ssh-agent/agent.host
       - app_username=${app_username}
       - app_user_id=${app_user_id}
       - app_group_id=${app_group_id}
-      - ssh_authorized_keys=${ssh_authorized_keys}
+      - ssh_authorized_keys=${app_ssh_authorized_keys}
     ports:
-      - "$app_expose_ip:${ssh_port}:22"
+      - "$app_expose_ip:${app_expose_port_ssh}:22"
     volumes:
-      - ./data/home:/home/${app_username}
+      #- ./data/home:/home/${app_username}
       - ./data/ssh:/etc/ssh
       - ./build/scripts:/scripts_extra:ro
       - ./config/init.ini:/etc/init.ini:ro
       #- ${host_mnt_path}:/mnt
-      - $SSH_AUTH_SOCK:/run/ssh-agent/agent.host
+      - $app_ssh_auth_socket:/run/ssh-agent/agent.host
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
     stdin_open: true
@@ -36,7 +49,7 @@ services:
 #      service: user_debian
 #    hostname: user_services
 #    ports:
-#      - "$app_expose_ip:${ssh_port_services}:22"
+#      - "$app_expose_ip:${app_expose_port_ssh_service}:22"
 #    volumes:
 #      - ./data/home_services:/home/${app_username}
 #      - ./data/ssh_services:/etc/ssh

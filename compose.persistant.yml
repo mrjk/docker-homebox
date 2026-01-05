@@ -1,0 +1,22 @@
+x-features:
+  persitant_home: true
+
+services:
+  user_debian:
+    volumes:
+      - ./data/home:/home/${app_username}
+
+#  user_services:
+#    profiles:
+#    - beta
+#    extends:
+#      service: user_debian
+#    hostname: user_services
+#    ports:
+#      - "$app_expose_ip:${app_expose_port_ssh_service}:22"
+#    volumes:
+#      - ./data/home_services:/home/${app_username}
+#      - ./data/ssh_services:/etc/ssh
+#      - ./scripts:/scripts:ro
+#      - ./config/init.ini:/etc/init.ini:ro
+#      - ${host_mnt_path}:/mnt

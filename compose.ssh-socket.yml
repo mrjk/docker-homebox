@@ -1,0 +1,9 @@
+x-features:
+  ssh_auth_socket: true
+
+services:
+  user_debian:
+    environment:
+      - SSH_AUTH_SOCK=/run/ssh-agent/agent.host
+    volumes:
+      - $app_ssh_auth_socket:/run/ssh-agent/agent.host

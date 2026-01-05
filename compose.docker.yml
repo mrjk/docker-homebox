@@ -1,0 +1,9 @@
+x-features:
+  docker_socket: true
+
+services:
+  user_debian:
+    #environment:
+    #  - DOCKER_SOCKET=unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro

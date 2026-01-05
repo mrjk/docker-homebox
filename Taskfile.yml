@@ -2,10 +2,10 @@
 
 version: '3'
 
-dotenv:
-  - .env
-
 tasks:
+  test:
+    cmds:
+      - 'env | sort'
   default:
     desc: List all commands
     cmds:
@@ -14,6 +14,10 @@ tasks:
 
   # Build commands
   # =========================
+  config:
+    desc: Show stack config
+    cmds:
+      - docker compose config
 
   build:
     desc: Build images

@@ -2,6 +2,24 @@
 
 <!-- version list -->
 
+## v1.0.3 (2026-01-06)
+
+### Bug Fixes
+
+- Docker image build
+  ([`5318451`](https://github.com/mrjk/docker-homebox/commit/531845127c862ca8e520ec12a4fbb8766708d31a))
+
+### Continuous Integration
+
+- Rework docker image publishing
+  ([`f91f205`](https://github.com/mrjk/docker-homebox/commit/f91f20542e58f1ad6c2424056ddad29a99bd889a))
+
+### Documentation
+
+- Fix github readme
+  ([`fb10d99`](https://github.com/mrjk/docker-homebox/commit/fb10d99443ceb6c8e758da58e002f6b7ed98b8a6))
+
+
 ## v1.0.2 (2026-01-06)
 
 ### Bug Fixes

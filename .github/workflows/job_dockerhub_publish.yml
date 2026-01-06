@@ -109,12 +109,12 @@ jobs:
           
 
       # TO BE MIGRATED TO JOB_DOCKERHUB_README.yml
-      - name: Sync Dockerhub README
-        uses: peter-evans/dockerhub-description@v4
-        with:
-          username: ${{ env.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ env.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}
+      #- name: Sync Dockerhub README
+      #  uses: peter-evans/dockerhub-description@v4
+      #  with:
+      #    username: ${{ env.DOCKERHUB_USERNAME }}
+      #    password: ${{ secrets.DOCKERHUB_TOKEN }}
+      #    repository: ${{ env.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}
 
   merge:
     environment: CICD

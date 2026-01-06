@@ -4,6 +4,8 @@ name: Pipeline - Release version
 on:
   workflow_dispatch:
   push:
+    tags:
+      - 'v.*'
     branches:
       - main
     paths-ignore:

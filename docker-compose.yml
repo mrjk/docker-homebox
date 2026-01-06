@@ -32,12 +32,7 @@ services:
       - "$app_expose_ip:${app_expose_port_ssh}:22"
     volumes:
       - ./data/ssh:/etc/ssh
-
-      - ./build/scripts:/scripts_extra:ro
-      - ./config/init.ini:/etc/init.ini:ro
-      #- ${host_mnt_path}:/mnt
-      - $app_ssh_auth_socket:/run/ssh-agent/agent.host
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/share:/data:ro
     restart: unless-stopped
     stdin_open: true
     tty: true

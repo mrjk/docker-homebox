@@ -30,13 +30,12 @@ tasks:
     cmds:
       - docker compose run --rm -ti -u root --entrypoint /bin/bash  user_debian
 
-  apply:
-    desc: Rebuild and apply if necessary changes 
-    aliases:
-      - upgrade
+  upgrade:
+    desc: Rebuild and recreate containers
     silent: true
     cmds:
       - task: build
+      - task: down
       - docker compose up -d --build
       - 'echo "Waiting 3 seconds for logs ..."'
       - sleep 3
@@ -69,9 +68,20 @@ tasks:
     desc: Redeploy stack
     aliases:
       - updown
+      - apply
     cmds:
       - docker compose down
       - docker compose up -d
+
+  update:
+    desc: Rebuild and apply if necessary changes 
+    silent: true
+    cmds:
+      - docker compose up -d --build
+      - 'echo "Waiting 3 seconds for logs ..."'
+      - sleep 3
+      - docker compose logs
+
 
   # Runtime commands
   # =========================

@@ -1,8 +1,6 @@
 #!/bin/bash
 set -eu -o pipefail
 
-set -x
-
 ensure_ssh_host_keys () {
   # Generate SSH host keys if they don't exist
   if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then

@@ -18,6 +18,7 @@ run_user_init ()
 
   if [[ -f "$script_path" ]]; then
     echo "Run user $user service script: $script_path"
+    cd "$home" || echo "WARN: Missing home for user $user: $home"
     su $user $script_path
   else
     echo "No service script found in $script_path"

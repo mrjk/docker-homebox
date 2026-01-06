@@ -1,0 +1,20 @@
+# Be carefull of security implication of this. This basically can give
+# root access from the inside container
+
+x-features:
+  host_data: true
+
+services:
+  user_debian:
+    volumes:
+      #- /mnt/:/mnt/
+      #- /srv/:/srv/
+
+      # Host full remap
+      - $app_volume_host:/host/$app_volume_host:$app_volume_host_perm
+
+      # Extra volumes remap
+      - $app_volume_map1:$app_volume_map1:$app_volume_map_perm
+      - $app_volume_map2:$app_volume_map2:$app_volume_map_perm
+      - $app_volume_map3:$app_volume_map3:$app_volume_map_perm
+

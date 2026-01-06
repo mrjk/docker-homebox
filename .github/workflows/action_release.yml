@@ -30,7 +30,7 @@ jobs:
     secrets: inherit
 
   release-dockerhub-readme:
-    needs: release-dockerhub
+    needs: release-semver
     if: needs.release-semver.outputs.released == 'true'
     uses: ./.github/workflows/job_dockerhub_readme.yml
     with:

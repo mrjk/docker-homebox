@@ -2,6 +2,24 @@
 
 <!-- version list -->
 
+## v1.0.2 (2026-01-06)
+
+### Bug Fixes
+
+- Dockerhub release
+  ([`00ad22d`](https://github.com/mrjk/docker-homebox/commit/00ad22d045555d04b292b274525eab50f957ed9d))
+
+### Continuous Integration
+
+- Fix gh action README release
+  ([`e04c9ca`](https://github.com/mrjk/docker-homebox/commit/e04c9ca6a5409732596cef3d507962740c08ce1a))
+
+### Refactoring
+
+- Code
+  ([`bb6e191`](https://github.com/mrjk/docker-homebox/commit/bb6e19135462223ed6c141c1de8d768ac6a5ccf1))
+
+
 ## v1.0.1 (2026-01-06)
 
 ### Bug Fixes

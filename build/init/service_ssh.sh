@@ -1,6 +1,7 @@
 #!/bin/bash
 set -eu -o pipefail
 
+set -x
 
 ensure_ssh_host_keys () {
   # Generate SSH host keys if they don't exist
@@ -16,7 +17,7 @@ ensure_ssh_config () {
 
     # Use backuped config or reuse apt to reconfigure
     if [[ -d /usr/local/include/confs/ssh/ ]]; then
-      cp -a --update=none /usr/local/include/confs/ssh/ /etc/ssh/
+      cp -ar --update=none /usr/local/include/confs/ssh/ /etc/
     else
       apt update
       apt-get -o Dpkg::Options::="--force-confmiss" install --reinstall openssh-server

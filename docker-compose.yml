@@ -31,8 +31,8 @@ services:
     ports:
       - "$app_expose_ip:${app_expose_port_ssh}:22"
     volumes:
-      #- ./data/home:/home/${app_username}
       - ./data/ssh:/etc/ssh
+
       - ./build/scripts:/scripts_extra:ro
       - ./config/init.ini:/etc/init.ini:ro
       #- ${host_mnt_path}:/mnt

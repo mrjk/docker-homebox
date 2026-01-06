@@ -2,10 +2,11 @@
 
 version: '3'
 
+env:
+  APP_USERNAME:
+    sh: "docker compose config --environment | sed -n 's/app_username=//p'"
+
 tasks:
-  test:
-    cmds:
-      - 'env | sort'
   default:
     desc: List all commands
     cmds:
@@ -14,41 +15,46 @@ tasks:
 
   # Build commands
   # =========================
-  config:
-    desc: Show stack config
-    cmds:
-      - docker compose config
-
   build:
     desc: Build images
     cmds:
       - docker compose --progress plain build
 
-  recreate:
-    desc: Redeploy stack
-    cmds:
-      - docker compose down
-      - docker compose up -d
-
-  upgrade:
-    desc: Rebuild and apply if necessary changes 
-    cmds:
-      - task: build
-      - docker compose up -d
-
   run:
     desc: Run ephemeral container shell (via run)
     cmds:
-      - docker compose run --rm -ti -u $app_username user_debian /bin/bash
+      - docker compose run --rm -ti -u $APP_USERNAME user_debian /bin/bash
 
   run-root:
     desc: Run ephemeral container root shell (via run)
     cmds:
       - docker compose run --rm -ti -u root --entrypoint /bin/bash  user_debian
 
+  apply:
+    desc: Rebuild and apply if necessary changes 
+    aliases:
+      - upgrade
+    silent: true
+    cmds:
+      - task: build
+      - docker compose up -d --build
+      - 'echo "Waiting 3 seconds for logs ..."'
+      - sleep 3
+      - docker compose logs
+
 
   # Lifecycle commands
   # =========================
+
+  env:
+    cmds:
+      - 'docker compose config --environment'
+
+  config:
+    desc: Show stack config
+    cmds:
+      - docker compose config
+
   down:
     desc: Down the stack
     cmds:
@@ -59,19 +65,28 @@ tasks:
     cmds:
       - docker compose up -d
 
+  recreate:
+    desc: Redeploy stack
+    aliases:
+      - updown
+    cmds:
+      - docker compose down
+      - docker compose up -d
+
   # Runtime commands
   # =========================
   logs:
     desc: Show live logs
     cmds:
-      - docker compose logs -f
+      - cmd: docker compose logs -f
+        ignore_error: true
 
-  connect:
+  enter:
     desc: Enter in current instance (via exec)
     cmds:
-      - cmd: docker compose exec -ti -u $app_username user_debian /bin/bash
+      - cmd: docker compose exec -ti -u $APP_USERNAME user_debian /bin/bash
         ignore_error: true
-  connect-root:
+  enter-root:
     desc: Enter in current instance as root (via exec)
     cmds:
       - cmd: docker compose exec -ti -u root  user_debian /bin/bash

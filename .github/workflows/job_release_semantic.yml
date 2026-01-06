@@ -23,11 +23,6 @@ on:
           description: 'Released version'
           value: ${{ jobs.release.outputs.version }}
 
-    # secrets:
-    #   GITHUB_TOKEN:
-    #     description: 'GitHub token for authentication'
-    #     required: false
-
 permissions:
   id-token: write
   contents: write
@@ -57,7 +52,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           verbosity: 1
           prerelease: ${{ inputs.prerelease }}
-          branch: ${{ github.ref_name }}
 
       - name: Report release status
         if: steps.semantic-release.outputs.released == 'true'

@@ -1,0 +1,36 @@
+[tool.semantic_release]
+# No version files needed for Docker-only projects
+version_toml = []
+version_variables = []
+
+# Don't build anything (this is Docker, not Python)
+build_command = ""
+
+# Branch configuration
+branch = "main"
+
+# Commit parsing
+commit_parser = "angular"
+major_on_zero = true
+tag_format = "v{version}"
+
+# Don't upload to PyPI
+upload_to_vcs_release = true
+upload_to_pypi = false
+
+[tool.semantic_release.branches.main]
+match = "(main|master)"
+prerelease = false
+
+[tool.semantic_release.branches.dev]
+match = "dev"
+prerelease = true
+prerelease_token = "dev"
+
+[tool.semantic_release.changelog]
+changelog_file = "CHANGELOG.md"
+exclude_commit_patterns = []
+
+[tool.semantic_release.changelog.environment]
+keep_trailing_newline = true
+

@@ -57,6 +57,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           verbosity: 1
           prerelease: ${{ inputs.prerelease }}
+          branch: ${{ github.ref_name }}
 
       - name: Report release status
         if: steps.semantic-release.outputs.released == 'true'

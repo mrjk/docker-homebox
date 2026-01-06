@@ -20,6 +20,8 @@ jobs:
   release-semver:
     uses: ./.github/workflows/job_release_semantic.yml
     secrets: inherit
+    with:
+      prerelease: true
 
   release-dockerhub:
     needs: release-semver
@@ -29,13 +31,13 @@ jobs:
       ref: "v${{ needs.release-semver.outputs.version }}"
     secrets: inherit
 
-  release-dockerhub-readme:
-    needs: release-semver
-    if: needs.release-semver.outputs.released == 'true'
-    uses: ./.github/workflows/job_dockerhub_readme.yml
-    with:
-      ref: "v${{ needs.release-semver.outputs.version }}"
-      dockerhub_username: "${{ vars.DOCKERHUB_USERNAME }}"
-    secrets: inherit  
+#  release-dockerhub-readme:
+#    needs: release-semver
+#    if: needs.release-semver.outputs.released == 'true'
+#    uses: ./.github/workflows/job_dockerhub_readme.yml
+#    with:
+#      ref: "v${{ needs.release-semver.outputs.version }}"
+#      dockerhub_username: "${{ vars.DOCKERHUB_USERNAME }}"
+#    secrets: inherit  
 
   

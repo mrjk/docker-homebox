@@ -9,6 +9,11 @@ on:
         required: false
         type: string
         default: 'main'
+      prerelease:
+        description: 'Create a prerelease'
+        required: false
+        type: boolean
+        default: false
 
     outputs:
       released:
@@ -51,6 +56,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           verbosity: 1
+          prerelease: ${{ inputs.prerelease }}
 
       - name: Report release status
         if: steps.semantic-release.outputs.released == 'true'

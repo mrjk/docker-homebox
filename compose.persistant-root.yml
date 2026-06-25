@@ -1,0 +1,8 @@
+x-features:
+  persitant_root: true
+
+services:
+  user_debian:
+    volumes:
+      - ./data/root:/root
+

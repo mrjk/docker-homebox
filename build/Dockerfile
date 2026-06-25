@@ -8,7 +8,6 @@ FROM debian:13 AS debian_base
 RUN apt-get update && apt-get install -y \
     dialog \
     locales \
-    tini \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -61,68 +60,27 @@ RUN mkdir -p /usr/local/include/confs/ && \
 #RUN apt-get -o Dpkg::Options::="--force-confask" install --reinstall openssh-server
 # Other useful: man info telnet nmap
 
-# User configuration
-####################################
-FROM debian_pkgs AS debian_user
-
-# Build arguments
-ARG app_username=appuser
-ARG app_user_id=1000
-ARG app_group_id=1000
-
-ENV HOMEBOX_USER=$app_username
-ENV HOMEBOX_USER_UID=$app_user_id
-ENV HOMEBOX_USER_GID=$app_group_id
-
-# Create user with specified UID/GID
-RUN groupadd -g ${app_group_id} ${app_username} && \
-    useradd -m -u ${app_user_id} -g ${app_group_id} -s /bin/bash ${app_username}
-
-# Configure sudo for the user
-RUN echo "${app_username} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${app_username} && \
-    chmod 0440 /etc/sudoers.d/${app_username}
-
-# Create necessary directories for sshd
-RUN mkdir -p /var/run/sshd && \
-    chmod 755 /var/run/sshd
-
-
 
 # Custom configuration
 ####################################
-FROM debian_user AS debian_custom
+FROM debian_pkgs AS debian_user
+
+# Manage init system
+RUN apt-get update && apt-get install -y \
+    supervisor \
+    tini \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Run build scripts
-COPY build/build_scripts /usr/local/build
+COPY ./build_scripts /usr/local/build
 
 RUN /usr/local/build/install_docker.sh
 RUN /usr/local/build/install_mise.sh
 RUN /usr/local/build/install_oh-my-bash.sh
 
 # Copy init scripts
-COPY build/init /usr/local/init
+COPY ./init /usr/local/init
 
-
-# Copy entrypoint script
-#COPY build/entrypoint.sh /entrypoint.sh
-#RUN chmod +x /entrypoint.sh
-
-
-# Dynamic scripts
-WORKDIR /home/$app_username
-#COPY build/scripts/build_* /scripts/
-#RUN /scripts/build_root.sh
-#USER $app_username
-#RUN /scripts/build_user.sh
-#USER root
-
-# Expose SSH port
-EXPOSE 22
-
-# Set entrypoint
-
-#COPY build/scripts/init_* /scripts/
-
-#ENTRYPOINT ["/entrypoint.sh"]
-ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/init/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/init/minit.sh"]
 

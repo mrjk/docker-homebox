@@ -20,17 +20,18 @@ services:
         - "docker-homebox-debian:${app_username}-latest"
       labels:
         org.jeznet.description: "User container"
-      args:
-        app_username: ${app_username}
-        app_user_id: ${app_user_id}
-        app_group_id: ${app_group_id}
+      #args:
+      #  app_username: ${app_username}
+      #  app_user_id: ${app_user_id}
+      #  app_group_id: ${app_group_id}
 
     hostname: ${app_username}-debian
     environment:
-      - app_username=${app_username}
-      - app_user_id=${app_user_id}
-      - app_group_id=${app_group_id}
-      - ssh_authorized_keys=${app_ssh_authorized_keys}
+      - HOMEBOX_USER_LOGIN=$app_username
+      - HOMEBOX_USER_UID=$app_user_id
+      - HOMEBOX_USER_GID=$app_group_id
+      - HOMEBOX_USER_SUDO=true
+      - HOMEBOX_USER_PUBKEYS=
     ports:
       - "$app_expose_ip:${app_expose_port_ssh}:22"
     volumes:

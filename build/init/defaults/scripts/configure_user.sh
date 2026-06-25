@@ -67,6 +67,25 @@ configure_home_permissions() {
   chown -R $uid:$gid "$home_dir"
 }
 
+parse_ssh_keys () {
+  local ssh_keys=$1
+
+  echo "$ssh_keys" | tr ',' '\n' | while IFS= read -r line; do
+    # Trim leading/trailing whitespace
+    line="$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+  
+    if [[ "$line" == http://* ]] || [[ "$line" == https://* ]]; then
+      # Download the file, strip empty lines, append to authorized_keys
+      curl -fsSL "$line" | grep -v '^[[:space:]]*$' >> "$ssh_dir/authorized_keys"
+    else
+      # Regular key — skip empty lines, append to authorized_keys
+      if [[ -n "$line" ]]; then
+        echo "$line"
+      fi
+    fi
+  done
+}
+
 configure_authorized_keys () {
   local username=$1
   local uid=$(id -u $username)
@@ -78,7 +97,8 @@ configure_authorized_keys () {
 
   if [ -n "$ssh_keys" ]; then
     log INFO "Setting up SSH authorized keys..."
-    echo "$ssh_keys" | tr ',' '\n' > "$ssh_dir/authorized_keys"
+    # echo "$ssh_keys" | tr ',' '\n' > "$ssh_dir/authorized_keys"
+    parse_ssh_keys "$ssh_keys" > "$ssh_dir/authorized_keys"
     chmod 700 "$ssh_dir"
     chmod 600 "$ssh_dir/authorized_keys"
   else

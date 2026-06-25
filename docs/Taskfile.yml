@@ -1,0 +1,37 @@
+---
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+
+
+  list:
+    desc: "Show available commands"
+    aliases:
+      - default
+    silent: true
+    cmds:
+      - task --list-all
+
+  # Generate
+  # =============
+
+  setup:
+    desc: Setup documentation environment
+    cmds:
+      - uv pip install -r requirements.txt
+
+  # Mkdocs
+  # =============
+
+  serve:
+    desc: serve mkdoc website locally
+    cmds:
+      - zensical serve
+
+  publish:
+    desc: update gh_page branch with new documentation
+    cmds:
+      - poetry run mkdocs gh-deploy --force
+

@@ -1,4 +1,8 @@
-# SSH and Dynamic User Configuration
+---
+icon: lucide/container
+---
+
+# Usage
 
 This container image can automatically:
 
@@ -11,7 +15,7 @@ This container image can automatically:
 
 All configuration is performed through environment variables.
 
-# Quick Start
+## Quick Start
 
 Create a user named `john` with UID/GID `1000`, install SSH keys, and enable sudo:
 
@@ -32,9 +36,9 @@ Connect:
 ssh john@host -p 2222
 ```
 
-# Environment Variables
+## Environment Variables
 
-## HOMEBOX_USER_LOGIN
+### HOMEBOX_USER_LOGIN
 
 Username to create during container startup.
 
@@ -58,7 +62,7 @@ HOMEBOX_USER_LOGIN=root
 
 When set to `root`, no additional user is created.
 
-## HOMEBOX_USER_UID
+### HOMEBOX_USER_UID
 
 User UID. Ignored when user is root.
 
@@ -76,7 +80,7 @@ HOMEBOX_USER_UID=2000
 
 Useful when matching ownership of bind-mounted host directories.
 
-## HOMEBOX_USER_GID
+### HOMEBOX_USER_GID
 
 User primary group ID. Ignored when user is root.
 
@@ -92,7 +96,7 @@ Example:
 HOMEBOX_USER_GID=2000
 ```
 
-## HOMEBOX_USER_PUBKEYS
+### HOMEBOX_USER_PUBKEYS
 
 Comma-separated list of SSH public keys and/or URLs.
 
@@ -104,7 +108,7 @@ HOMEBOX_USER_PUBKEYS="ssh-ed25519 AAAA...,https://github.com/john.keys"
 
 Each URL is downloaded during startup and appended to the user's `authorized_keys` file.
 
-## HOMEBOX_USER_SUDO
+### HOMEBOX_USER_SUDO
 
 Enable passwordless sudo. Ignored when user is root.
 
@@ -132,7 +136,7 @@ with:
 <username> ALL=(ALL) NOPASSWD:ALL
 ```
 
-# SSH Server
+## SSH Server
 
 The container automatically configures OpenSSH.
 
@@ -151,7 +155,7 @@ The SSH daemon runs as root and stays in the foreground:
 
 Logs are written to container stdout/stderr.
 
-# Dynamic User Management
+## Dynamic User Management
 
 At startup the container:
 
@@ -172,7 +176,7 @@ Home:     /home/john
 Shell:    /bin/bash
 ```
 
-# Docker Socket Access
+## Docker Socket Access
 
 If a Docker socket is mounted:
 
@@ -205,7 +209,7 @@ docker compose up -d
 
 If no Docker socket is present, this step is skipped.
 
-# User Initialization Script
+## User Initialization Script
 
 The container can execute a user-provided startup script.
 
@@ -223,7 +227,7 @@ mkdir -p ~/.config/homebox
 
 ```bash
 cat > ~/.config/homebox/init.sh <<'EOF'
-#!/bin/bash
+##!/bin/bash
 
 echo "Initializing user environment"
 
@@ -252,7 +256,7 @@ This can be used to:
 * Create directories.
 * Install user-specific configuration.
 
-# Example Docker Compose
+## Example Docker Compose
 
 ```yaml
 services:
@@ -275,7 +279,7 @@ services:
       - ./home:/home/john
 ```
 
-# Startup Sequence
+## Startup Sequence
 
 The initialization process executes in the following order:
 
@@ -295,7 +299,7 @@ Supervisor
  └─ Start sshd
 ```
 
-# Security Notes
+## Security Notes
 
 * No support for account password
 * SSH password authentication should be disabled whenever possible.

@@ -62,7 +62,7 @@ configure_home_permissions() {
   local gid=$(id -g $username)
   local home_dir=$(getent passwd "$username" | cut -d: -f6)
 
-  log INFO "Recursively update user home directory permissions ($uid:$gid): /home/$username"
+  log INFO "Recursively update user home directory permissions ($uid:$gid): $home_dir"
   mkdir -p "$home_dir"
   chown -R $uid:$gid "$home_dir"
 }
@@ -92,7 +92,8 @@ configure_authorized_keys () {
   local gid=$(id -g $username)
   local ssh_keys=$2
 
-  local ssh_dir="/home/$username/.ssh"
+  local home_dir=$(getent passwd "$username" | cut -d: -f6)
+  local ssh_dir="$home_dir/.ssh"
   mkdir -p "$ssh_dir"
 
   if [ -n "$ssh_keys" ]; then
@@ -110,16 +111,27 @@ configure_authorized_keys () {
 }
 
 
+allow_passwordless_root () {
+  log INFO "Allow passwordless ssh for root user"
+  sed -i \
+    -e 's/^#\?PermitRootLogin.*/PermitRootLogin prohibit-password/' \
+    /etc/ssh/sshd_config
+  
+  # -e 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' \
+}
+
 if [[ -z "$USERNAME" ]]; then
   log ERROR "Missing username argument"
   exit 1
-elif [[ "$USERNAME" == 'root' ]]; then
-  log WARN "No need to create user root"
-  exit 0
 fi
 
-#echo "INFO: Configure user $username - Start"
-ensure_user $USERNAME $PUID $PGID
-# configure_home_permissions $USERNAME
+if [[ "$USERNAME" != 'root' ]]; then
+  ensure_user $USERNAME $PUID $PGID
+else
+  log WARN "No need to create user root"
+  allow_passwordless_root
+fi
+
 configure_authorized_keys $USERNAME "$SSH_KEYS"
-#echo "INFO: Configure user $username - Done"
+
+

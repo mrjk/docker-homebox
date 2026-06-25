@@ -24,15 +24,19 @@ ensure_user () {
   local username=$1
   local uid=$2
   local gid=$3
+  local home_dir=
 
   # Ensure user exists
   if ! grep -q "^$username:" /etc/passwd; then
     log INFO "Creating user ($uid/$gid): $username "
     groupadd -g ${gid} ${username}
     local extra_opt=
-    [[ -d /home/$username ]] || extra_opt="$extra_opt -m"
+    home_dir=/home/$username
+    [[ -d "$home_dir" ]] || extra_opt="$extra_opt -m"
     useradd $extra_opt -u ${uid} -g ${gid} -s /bin/bash ${username}
   else
+    
+    home_dir=$(getent passwd "$username" | cut -d: -f6)
 
     # Update user UID/GID if changed
     local curr_uid=$(id -u $username)
@@ -48,18 +52,19 @@ ensure_user () {
   fi
 
   # Ensure user permissions
-  log INFO "Update user home directory permissions ($uid:$gid): /home/$username"
-  chown $uid:$gid /home/$username
+  log INFO "Update user home directory permissions ($uid:$gid): $home_dir"
+  chown $uid:$gid "$home_dir"
 }
 
 configure_home_permissions() {
   local username=$1
   local uid=$(id -u $username)
   local gid=$(id -g $username)
+  local home_dir=$(getent passwd "$username" | cut -d: -f6)
 
   log INFO "Recursively update user home directory permissions ($uid:$gid): /home/$username"
-  mkdir -p /home/$username
-  chown -R $uid:$gid /home/$username
+  mkdir -p "$home_dir"
+  chown -R $uid:$gid "$home_dir"
 }
 
 configure_authorized_keys () {

@@ -63,7 +63,7 @@ RUN mkdir -p /usr/local/include/confs/ && \
 
 # Custom configuration
 ####################################
-FROM debian_pkgs AS debian_user
+FROM debian_pkgs AS debian_init
 
 # Manage init system
 RUN apt-get update && apt-get install -y \
@@ -81,6 +81,25 @@ RUN /usr/local/build/install_oh-my-bash.sh
 
 # Copy init scripts
 COPY ./init /usr/local/init
-
+WORKDIR /root
 ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/init/minit.sh"]
+
+# Add OCI labels
+ARG BUILD_DATE
+ARG GIT_COMMIT
+ARG VERSION
+
+LABEL org.opencontainers.image.title="Homebox - Debian" \
+      org.opencontainers.image.description="Container like VM for containerised development" \
+      org.opencontainers.image.created="${BUILD_DATE}" \
+      org.opencontainers.image.revision="${GIT_COMMIT}" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.authors="mrjk.78@gmail.com" \
+      org.opencontainers.image.url="https://github.com/mrjk/docker-homebox/" \
+      org.opencontainers.image.documentation="https://github.com/mrjk/docker-homebox/tree/main/docs" \
+      org.opencontainers.image.source="https://github.com/mrjk/docker-homebox/" \
+      org.opencontainers.image.vendor="mrjk78" \
+      org.opencontainers.image.licenses="MIT" \
+      org.opencontainers.image.base.name="debian:trixie"
+
 

@@ -14,16 +14,14 @@ services:
     build:
       context: ./build/
       dockerfile: ./Dockerfile
-      target: debian_user
+      target: debian_init
       tags:
         - "docker-homebox-debian:latest"
-        - "docker-homebox-debian:${app_username}-latest"
-      labels:
-        org.jeznet.description: "User container"
-      #args:
-      #  app_username: ${app_username}
-      #  app_user_id: ${app_user_id}
-      #  app_group_id: ${app_group_id}
+        - "docker-homebox-debian:${app_image_version}"
+      args:
+        VERSION: $app_image_version
+        GIT_COMMIT: main
+        BUILD_DATE: "1970-01-01T00:00:00Z"
 
     hostname: ${app_username}-debian
     environment:
@@ -38,8 +36,8 @@ services:
       - ./data/ssh:/etc/ssh
       - ./data/share:/data:ro
     restart: unless-stopped
-    stdin_open: true
-    tty: true
+    #stdin_open: true
+    #tty: true
 
 #  user_services:
 #    profiles:

@@ -12,8 +12,9 @@ x-infos:
 services:
   user_debian:
     build:
-      context: .
-      dockerfile: ./build/Dockerfile
+      context: ./build/
+      dockerfile: ./Dockerfile
+      target: debian_user
       tags:
         - "docker-homebox-debian:latest"
         - "docker-homebox-debian:${app_username}-latest"

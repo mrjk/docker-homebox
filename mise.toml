@@ -1,2 +1,11 @@
 [tools]
+python = "3.12"
 task = "latest"
+uv = "0.11.23"
+
+[env]
+_.python.venv = { path = ".venv", create = true }
+UV_LINK_MODE="copy"
+
+[settings]
+python.uv_venv_auto = "create|source"

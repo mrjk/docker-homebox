@@ -45,24 +45,24 @@ services:
 
 
   # WIPPP
-  # debian-12:
-  #   <<: *common
+  debian-12:
+    <<: *common
 
-  #   image: mrjk/homebox:debian-12-latest
-  #   build:
-  #     context: ./build/
-  #     dockerfile: ./Dockerfile.debian
-  #     target: debian_init
-  #     tags:
-  #       - "mrjk/homebox:debian-12-latest"
-  #       - "mrjk/homebox:debian-12-${app_image_version:-latest}"
-  #     args:
-  #       BASE_IMAGE: debian:12
-  #       VERSION: ${app_image_version:-latest}
-  #       GIT_COMMIT: main
-  #       BUILD_DATE: "${app_image_build_date:-1970-01-01T00:00:00Z}"
+    image: mrjk/homebox:debian-12-latest
+    build:
+      context: ./build/
+      dockerfile: ./Dockerfile.debian
+      target: debian_init
+      tags:
+        - "mrjk/homebox:debian-12-latest"
+        - "mrjk/homebox:debian-12-${app_image_version:-latest}"
+      args:
+        BASE_IMAGE: debian:12-slim
+        VERSION: ${app_image_version:-latest}
+        GIT_COMMIT: main
+        BUILD_DATE: "${app_image_build_date:-1970-01-01T00:00:00Z}"
 
-  #   hostname: debian-12
+    hostname: debian-12
 
 
 

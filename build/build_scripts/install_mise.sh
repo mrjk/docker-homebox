@@ -4,7 +4,7 @@
 
 set -eu -o pipefail
 
-echo "Installing mise ..."
+>&2 echo "Installing mise ..."
 # Install mise
 export MISE_CACHE_DIR="/cache/mise"
 export MISE_INSTALL_PATH="/usr/local/bin/mise"
@@ -20,5 +20,5 @@ curl https://mise.run | sh
 # Enable mise
 #echo 'eval "$(/usr/local/bin/mise activate bash)"' >> ~/.bashrc
 
-echo "Mise installed and configured"
+>&2 echo "Mise installed and configured"
 

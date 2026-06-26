@@ -190,17 +190,23 @@ EOF
   minit_info
   title "Starting supervisord"
   log "INFO" "Starting supervisord ..."
-  supervisord -c "$supervisor_conf"
+  exec supervisord -c "$supervisor_conf"
   # exec supervisord -j /tmp/supervisord.pid -c "$supervisor_conf"
 }
 
 minit_pid1_sleep () {
   minit_info
   log DEBUG "Container started (sleep infinity)"
-  /usr/bin/sleep infinity
+  exec /usr/bin/sleep infinity
 }
 
-
-log INFO "Container Initialization"
-minit_run
+# Startup management
+if [ $# -eq 0 ]; then
+  log INFO "Container Initialization"
+  minit_run
+else
+  log DEBUG "Executing command: $@"
+  log INFO "Execute default entrypoint with: $0"
+  exec "$@"
+fi
 

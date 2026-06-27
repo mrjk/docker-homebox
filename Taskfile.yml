@@ -39,6 +39,7 @@ tasks:
     aliases:
       - ci-push
     deps:
+      - build
       - login
     cmds:
       - docker compose push
@@ -48,10 +49,11 @@ tasks:
     aliases:
       - ci-push-latest
     deps:
+      - build
       - login
     cmds:
-      - docker tag "mrjk78/docker-homebox:debian-13-${app_image_version}" "mrjk78/docker-homebox:debian-13-latest"
-      - docker push "mrjk78/docker-homebox:debian-13-latest"
+      - docker tag "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
 
   login:
     desc: Login to registry

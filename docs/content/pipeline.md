@@ -1,3 +1,7 @@
+ ---
+icon: lucide/workflow
+ ---
+
 # Project pipelines
 
 ## Universal CI

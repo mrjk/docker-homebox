@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.1.0-dev.3 (2026-06-28)
+
+### Bug Fixes
+
+- Versionning issues
+  ([`848cad9`](https://github.com/mrjk/docker-homebox/commit/848cad97713922f1f1992c76c49952a5ae5fd031))
+
+
 ## v1.1.0-dev.2 (2026-06-28)
 
 ### Bug Fixes

@@ -15,9 +15,16 @@ env:
 
   DOCKER_CONFIG: .tmp/docker-auth
 
+  #VERSION:
+  #  sh: semantic-release version --print-last-released
+
+  app_image_version:
+    sh: semantic-release version --print
+
 vars:
   BRANCH:
     sh: git rev-parse --abbrev-ref HEAD
+
 
 includes:
   docs:
@@ -107,6 +114,7 @@ tasks:
       - setup
     cmds:
       - semantic-release version
+      - git push
 
   push-dockerhub-readme:
     desc: Push dockerhub readme

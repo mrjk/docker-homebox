@@ -129,7 +129,7 @@ tasks:
       - sh: '[ "{{.BRANCH}}" = "main" ]'
         msg: "Must be on main branch (current: {{.BRANCH}})"
     cmds:
-      - push
-      - push-latest
-      - push-dockerhub-readme
-      - docs:publish
+      - task: push
+      - task: push-latest
+      - task: push-dockerhub-readme
+      - task: docs:publish

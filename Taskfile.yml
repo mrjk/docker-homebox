@@ -3,8 +3,17 @@
 version: '3'
 
 env:
-  APP_USERNAME:
-    sh: "docker compose config --environment | sed -n 's/app_username=//p'"
+  app_image_build_date:
+    sh: >
+      date -u +"%Y-%m-%dT%H:%M:%SZ"
+  app_image_version:
+    sh: > 
+      git symbolic-ref --short -q HEAD || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD
+  app_image_commit:
+    sh: > 
+      git rev-parse --short HEAD
+
+  DOCKER_CONFIG: .tmp/docker-auth
 
 tasks:
   default:
@@ -20,29 +29,38 @@ tasks:
     cmds:
       - docker compose --progress plain build
 
-  run:
-    desc: Run ephemeral container shell (via run)
+  push:
+    desc: Push images
+    deps:
+      - login
     cmds:
-      - docker compose run --rm -ti -u $APP_USERNAME user_debian /bin/bash
+      - docker compose push
 
-  run-root:
-    desc: Run ephemeral container root shell (via run)
+  push-latest:
+    desc: Push current image to latest
+    deps:
+      - login
     cmds:
-      - docker compose run --rm -ti -u root --entrypoint /bin/bash  user_debian
+      - docker tag "mrjk78/docker-homebox:debian-13-${app_image_version}" "mrjk78/docker-homebox:debian-13-latest"
+      - docker push "mrjk78/docker-homebox:debian-13-latest"
 
-  upgrade:
-    desc: Rebuild and recreate containers
+  login:
+    desc: Login to registry
     silent: true
+    if: "[ ! -f $DOCKER_CONFIG/config.json ]"
     cmds:
-      - task: build
-      - task: down
-      - docker compose up -d --build
-      - 'echo "Waiting 3 seconds for logs ..."'
-      - sleep 3
-      - docker compose logs
+      - |
+        mkdir -p "$DOCKER_CONFIG"
+        echo "$DOCKERHUB_TOKEN" | docker login \
+        --username "$DOCKERHUB_USERNAME" \
+        --password-stdin
+  logout:
+    desc: Logout from registry
+    cmds:
+      - rm -f "$DOCKER_CONFIG/config.json"
 
 
-  # Lifecycle commands
+  # Info commands
   # =========================
 
   env:
@@ -53,52 +71,4 @@ tasks:
     desc: Show stack config
     cmds:
       - docker compose config
-
-  down:
-    desc: Down the stack
-    cmds:
-      - docker compose down
-
-  up:
-    desc: Up the stack
-    cmds:
-      - docker compose up -d
-
-  recreate:
-    desc: Redeploy stack
-    aliases:
-      - updown
-      - apply
-    cmds:
-      - docker compose down
-      - docker compose up -d
-
-  update:
-    desc: Rebuild and apply if necessary changes 
-    silent: true
-    cmds:
-      - docker compose up -d --build
-      - 'echo "Waiting 3 seconds for logs ..."'
-      - sleep 3
-      - docker compose logs
-
-
-  # Runtime commands
-  # =========================
-  logs:
-    desc: Show live logs
-    cmds:
-      - cmd: docker compose logs -f
-        ignore_error: true
-
-  enter:
-    desc: Enter in current instance (via exec)
-    cmds:
-      - cmd: docker compose exec -ti -u $APP_USERNAME user_debian /bin/bash
-        ignore_error: true
-  enter-root:
-    desc: Enter in current instance as root (via exec)
-    cmds:
-      - cmd: docker compose exec -ti -u root  user_debian /bin/bash
-        ignore_error: true
 

@@ -1,91 +1,16 @@
 # Main docker compose file
 
-#x-features:
-#  app_username: $app_username
-#  app_user_id: ${app_user_id}
-#  app_group_id: ${app_group_id}
-#  app_expose_port_ssh: $app_expose_port_ssh
-#x-infos:
-#  connect: |
-#    ssh -p $app_expose_port_ssh $app_username@$app_expose_ip
-
-x-common: &common
-  environment:
-    - HOMEBOX_USER_LOGIN=${app_username:-user}
-    - HOMEBOX_USER_UID=${app_user_id:-1000}
-    - HOMEBOX_USER_GID=${app_group_id:-1000}
-    - HOMEBOX_USER_SUDO=${app_user_sudo:-true}
-    - HOMEBOX_USER_PUBKEYS=${app_user_pubkeys:-}
-
 services:
   debian-13:
-    <<: *common
-
-    image: mrjk/homebox:debian-13-latest
+    image: "mrjk78/docker-homebox:debian-13-${app_image_version:-latest}"
     build:
       context: ./build/
       dockerfile: ./Dockerfile.debian
-      target: debian_init
+      target: homebox
       tags:
-        - "mrjk/homebox:debian-13-latest"
-        - "mrjk/homebox:debian-13-${app_image_version:-latest}"
+        - "mrjk78/docker-homebox:debian-13-${app_image_version:-latest}"
       args:
         BASE_IMAGE: debian:13-slim
         VERSION: ${app_image_version:-latest}
-        GIT_COMMIT: main
+        GIT_COMMIT: ${app_image_commit:-0000000}
         BUILD_DATE: "${app_image_build_date:-1970-01-01T00:00:00Z}"
-
-    hostname: debian-13
-    # environment:
-    #   - HOMEBOX_USER_LOGIN=${app_username:-user}
-    #   - HOMEBOX_USER_UID=${app_user_id:-1000}
-    #   - HOMEBOX_USER_GID=${app_group_id:-1000}
-    #   - HOMEBOX_USER_SUDO=${app_user_sudo:-true}
-    #   - HOMEBOX_USER_PUBKEYS=${app_user_pubkeys:-}
-
-
-  # WIPPP
-  debian-12:
-    <<: *common
-
-    image: mrjk/homebox:debian-12-latest
-    build:
-      context: ./build/
-      dockerfile: ./Dockerfile.debian
-      target: debian_init
-      tags:
-        - "mrjk/homebox:debian-12-latest"
-        - "mrjk/homebox:debian-12-${app_image_version:-latest}"
-      args:
-        BASE_IMAGE: debian:12-slim
-        VERSION: ${app_image_version:-latest}
-        GIT_COMMIT: main
-        BUILD_DATE: "${app_image_build_date:-1970-01-01T00:00:00Z}"
-
-    hostname: debian-12
-
-
-
-    # ports:
-    #   - "$app_expose_ip:${app_expose_port_ssh}:22"
-    #volumes:
-    #  - ./data/ssh:/etc/ssh
-    #  - ./data/share:/data:ro
-    #restart: unless-stopped
-    #stdin_open: true
-    #tty: true
-
-#  user_services:
-#    profiles:
-#    - beta
-#    extends:
-#      service: user_debian
-#    hostname: user_services
-#    ports:
-#      - "$app_expose_ip:${app_expose_port_ssh_service}:22"
-#    volumes:
-#      - ./data/home_services:/home/${app_username}
-#      - ./data/ssh_services:/etc/ssh
-#      - ./scripts:/scripts:ro
-#      - ./config/init.ini:/etc/init.ini:ro
-#      - ${host_mnt_path}:/mnt

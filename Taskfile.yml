@@ -19,7 +19,7 @@ env:
   #  sh: semantic-release version --print-last-released
 
   app_image_version:
-    sh: semantic-release version --print
+    sh: semantic-release version --print-tag
 
 vars:
   BRANCH:

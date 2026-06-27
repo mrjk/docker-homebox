@@ -69,6 +69,12 @@
 - Add new feature
   ([`1510270`](https://github.com/mrjk/docker-homebox/commit/1510270c5f898d759458dfebd3fb6c7c5dbe3ae8))
 
+## v1.0.5 (2026-01-06)
+
+### Bug Fixes
+
+- Image publish 2
+  ([`0b91acc`](https://github.com/mrjk/docker-homebox/commit/0b91acca968db8a673ba623608bd2ebcbd9d2895))
 
 ## v1.0.4 (2026-01-06)
 

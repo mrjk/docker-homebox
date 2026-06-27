@@ -2,13 +2,13 @@
 
 services:
   debian-13:
-    image: "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version:-latest}"
+    image: "homebox:debian-13-${app_image_version:-latest}"
     build:
       context: ./build/
       dockerfile: ./Dockerfile.debian
       target: homebox
       tags:
-        - "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version:-latest}"
+        - "homebox:debian-13-${app_image_version:-latest}"
       args:
         BASE_IMAGE: debian:13-slim
         VERSION: ${app_image_version:-latest}

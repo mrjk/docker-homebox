@@ -2,6 +2,51 @@
 
 <!-- version list -->
 
+## v1.1.0-dev.2 (2026-06-28)
+
+### Bug Fixes
+
+- Wrong image name
+  ([`ebdb549`](https://github.com/mrjk/docker-homebox/commit/ebdb549878ef201e94d74997b185e3310561bea6))
+
+### Continuous Integration
+
+- Add gh ci
+  ([`d05f5fe`](https://github.com/mrjk/docker-homebox/commit/d05f5fed6ea571dea1332e6690375120a5706b6d))
+
+- Add missing dockerhub script
+  ([`a8a8067`](https://github.com/mrjk/docker-homebox/commit/a8a806773f4d5879ad94581cfca7e598c2f7e03a))
+
+- Add missing requirements.tx
+  ([`68fc01b`](https://github.com/mrjk/docker-homebox/commit/68fc01bf17dffa5d72ad466e8b9d4678550e0de7))
+
+- Add release task
+  ([`59eb44e`](https://github.com/mrjk/docker-homebox/commit/59eb44e57384d69504fc511f74f711c9368175c2))
+
+- Add script to build site into repo
+  ([`be6a68f`](https://github.com/mrjk/docker-homebox/commit/be6a68f6c4b450e8fb59ad4601a1b5c3294ce948))
+
+- Fix dependency issue
+  ([`b6e8909`](https://github.com/mrjk/docker-homebox/commit/b6e89099bbd6f46b094d764637958ec161cc58db))
+
+- Remove hardcoded dockerhub repo
+  ([`25428f4`](https://github.com/mrjk/docker-homebox/commit/25428f444d10a23728dc00d26d83d070b0a49594))
+
+- Update release process
+  ([`0a71c2a`](https://github.com/mrjk/docker-homebox/commit/0a71c2a9912122ebc31faed350a6db534d0afe75))
+
+- Update taskfiles
+  ([`c9880b4`](https://github.com/mrjk/docker-homebox/commit/c9880b448ad31ce743191eeef37d56a48fbaf6d9))
+
+### Documentation
+
+- Update doc site description
+  ([`6f06aca`](https://github.com/mrjk/docker-homebox/commit/6f06aca28602092edddc4af0bff55fac38416592))
+
+- Update docs
+  ([`87031ca`](https://github.com/mrjk/docker-homebox/commit/87031ca6ca61e11e40c451ef293db58575e59094))
+
+
 ## v1.1.0 (2026-06-27)
 
 

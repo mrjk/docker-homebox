@@ -15,6 +15,11 @@ env:
 
   DOCKER_CONFIG: .tmp/docker-auth
 
+includes:
+  docs:
+    taskfile: docs/Taskfile.yml
+    dir: docs/
+
 tasks:
   default:
     desc: List all commands
@@ -31,6 +36,8 @@ tasks:
 
   push:
     desc: Push images
+    aliases:
+      - ci-push
     deps:
       - login
     cmds:
@@ -38,6 +45,8 @@ tasks:
 
   push-latest:
     desc: Push current image to latest
+    aliases:
+      - ci-push-latest
     deps:
       - login
     cmds:
@@ -79,11 +88,23 @@ tasks:
 
   setup:
     desc: Setup ci/cd environment
+    status:
+      - command -v semantic-release
     cmds:
       - uv pip install -r requirements.txt
 
   release:
     desc: Make a new release
+    aliases:
+      - ci-release
+    depends:
+      - setup
     cmds:
       - semantic-release version
 
+  push-dockerhub-readme:
+    desc: Push dockerhub readme
+    aliases:
+      - ci-push-readme
+    cmds:
+      - ./scripts/dockerhub-update-readme.sh

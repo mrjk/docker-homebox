@@ -31,6 +31,8 @@ tasks:
 
   publish:
     desc: update gh_page branch with new documentation
+    aliases:
+      - ci-docs-publish
     deps:
       - setup
     cmds:

@@ -15,6 +15,10 @@ env:
 
   DOCKER_CONFIG: .tmp/docker-auth
 
+vars:
+  BRANCH:
+    sh: git rev-parse --abbrev-ref HEAD
+
 includes:
   docs:
     taskfile: docs/Taskfile.yml
@@ -110,3 +114,15 @@ tasks:
       - ci-push-readme
     cmds:
       - ./scripts/dockerhub-update-readme.sh
+
+  release-stable:
+    desc: release stable version
+    preconditions:
+      - sh: '[ "{{.BRANCH}}" = "main" ]'
+        msg: "Must be on main branch (current: {{.BRANCH}})"
+    cmds:
+      - release
+      - push
+      - push-latest
+      - push-dockerhub-readme
+      - docs:publish

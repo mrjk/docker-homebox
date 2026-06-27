@@ -2,6 +2,74 @@
 
 <!-- version list -->
 
+## v1.1.0-dev.1 (2026-06-27)
+
+### Bug Fixes
+
+- Adjust minor details and cleanup files
+  ([`3a182a3`](https://github.com/mrjk/docker-homebox/commit/3a182a3642f2c80bb4befab9f9b3258016e91167))
+
+- Build path references
+  ([`621784d`](https://github.com/mrjk/docker-homebox/commit/621784ded044ec7f7fb61d5a5263ae3305cf051f))
+
+- Docker dev images
+  ([`4433226`](https://github.com/mrjk/docker-homebox/commit/44332264f3f40e887eaa2deba821cb44ff2c1d70))
+
+- Env vars
+  ([`ea9f9bc`](https://github.com/mrjk/docker-homebox/commit/ea9f9bc044d1b3e589cd07f8e9360cc303d7e41d))
+
+- Hardcoded user homedirs
+  ([`b0f455a`](https://github.com/mrjk/docker-homebox/commit/b0f455aeb30ce4178305eb8a0bbe72b8e9cdb870))
+
+- Image publish 2
+  ([`0b91acc`](https://github.com/mrjk/docker-homebox/commit/0b91acca968db8a673ba623608bd2ebcbd9d2895))
+
+- Minor cosmetic changes
+  ([`10b9dbb`](https://github.com/mrjk/docker-homebox/commit/10b9dbb307c0ff28cfd5db710b3dada654d13d8c))
+
+- On dev branch
+  ([`c364a95`](https://github.com/mrjk/docker-homebox/commit/c364a951bf8f46435ce1871eb295eeec60bffa87))
+
+- Semver verbosity
+  ([`1ac95c4`](https://github.com/mrjk/docker-homebox/commit/1ac95c4565b65c01639811bddac596e65ffef919))
+
+- Semvers on dev branches
+  ([`7aeff66`](https://github.com/mrjk/docker-homebox/commit/7aeff66c426f3ae7f7bb831f6cd7e3503a65f355))
+
+- Ssh root login case
+  ([`e77309e`](https://github.com/mrjk/docker-homebox/commit/e77309eec56b40a86eefee447dd4c12e87d00ced))
+
+- Wrong semver file name
+  ([`63962c8`](https://github.com/mrjk/docker-homebox/commit/63962c8e06233be226ad0376c01140ca1453de5a))
+
+### Continuous Integration
+
+- Fix semantic release config
+  ([`eff55ea`](https://github.com/mrjk/docker-homebox/commit/eff55eae71f25937c918f55e48142455a1a39d9c))
+
+- Remove deprecated files
+  ([`6c2f736`](https://github.com/mrjk/docker-homebox/commit/6c2f73605aedba4febe5d1fd0a886e6c43c06b91))
+
+### Documentation
+
+- Add base documentation
+  ([`176eb77`](https://github.com/mrjk/docker-homebox/commit/176eb77fb4b9ee553386e00cad0aaebf43366975))
+
+- Add develop page
+  ([`352d797`](https://github.com/mrjk/docker-homebox/commit/352d79727c4e076a56f5b26dffc4f674e8ef342d))
+
+- Update image informations
+  ([`7c4fb50`](https://github.com/mrjk/docker-homebox/commit/7c4fb50c9e3f60e8bd1b84e66c29e6cbb6144cab))
+
+### Features
+
+- Add another feature
+  ([`3d2d050`](https://github.com/mrjk/docker-homebox/commit/3d2d0507f78811f6ab895554398211eace5602ef))
+
+- Add new feature
+  ([`1510270`](https://github.com/mrjk/docker-homebox/commit/1510270c5f898d759458dfebd3fb6c7c5dbe3ae8))
+
+
 ## v1.0.4 (2026-01-06)
 
 

@@ -2,6 +2,30 @@
 
 <!-- version list -->
 
+## v1.1.1 (2026-06-28)
+
+### Bug Fixes
+
+- Compose image names
+  ([`c6d69a4`](https://github.com/mrjk/docker-homebox/commit/c6d69a41e8d848fd66bb7aec0ff1e5c1def85bf8))
+
+- Docker image version tag
+  ([`f446c40`](https://github.com/mrjk/docker-homebox/commit/f446c408fe359ffdd3d7b1fa3456a7296601d4ca))
+
+### Continuous Integration
+
+- Fix typo in taskfile
+  ([`22674b8`](https://github.com/mrjk/docker-homebox/commit/22674b8e3526212e4fa4a12596fba4b70ead0d8b))
+
+### Documentation
+
+- Fix page icon
+  ([`cd8158b`](https://github.com/mrjk/docker-homebox/commit/cd8158b13465b9c5b7d75be53b3c5661f1db6721))
+
+- Update pipeline documentation
+  ([`2a88e51`](https://github.com/mrjk/docker-homebox/commit/2a88e512538fa3a00e8cd6aee68704bb7a79ad10))
+
+
 ## v1.1.0-dev.4 (2026-06-28)
 
 ### Bug Fixes

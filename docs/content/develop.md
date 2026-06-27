@@ -53,14 +53,23 @@ export GITHUB_TOKEN=...
 
 ### Pipelines
 
-Stable deployment:
+
+#### Dev
+
+Push the dev image to registries: 
 ```
-task build push push-latest push-dockerhub-readme docs:publish
+# Push on develop channel
+task push 
+
+# Push on develop channel with pre-release
+task release
+task push 
 ```
 
-Development deployment:
+#### Stable
+Stable deployment, only on main branch:
 ```
-task build push push-dockerhub-readme docs:publish
+task release
+task push-stable
 ```
-
 

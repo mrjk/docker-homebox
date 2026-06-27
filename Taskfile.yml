@@ -72,3 +72,12 @@ tasks:
     cmds:
       - docker compose config
 
+
+
+  # CI/DC commands
+  # =========================
+
+  setup:
+    desc: Setup ci/cd environment
+    cmds:
+      - uv pip install -r requirements.txt

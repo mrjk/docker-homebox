@@ -2,6 +2,24 @@
 
 <!-- version list -->
 
+## v1.1.0-dev.4 (2026-06-28)
+
+### Bug Fixes
+
+- New release process
+  ([`5f5c670`](https://github.com/mrjk/docker-homebox/commit/5f5c6700cdf2399e52d0bfdcc936f34fbb7b432b))
+
+### Continuous Integration
+
+- Fix realse process
+  ([`fbb6446`](https://github.com/mrjk/docker-homebox/commit/fbb6446e02143b3be6b27875f84adac4afb57406))
+
+### Documentation
+
+- Fix documentation
+  ([`eb81445`](https://github.com/mrjk/docker-homebox/commit/eb81445cbeaaeab5f523ca676d096941f725c423))
+
+
 ## v1.1.0-dev.3 (2026-06-28)
 
 ### Bug Fixes

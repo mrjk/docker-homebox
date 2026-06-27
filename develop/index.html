@@ -386,6 +386,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dev" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Dev
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stable" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Stable
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -495,6 +523,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Pipelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dev" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Dev
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stable" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Stable
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -557,11 +613,19 @@ Then you can reach documentation on <a href="">http://localhost:8000/</a></p>
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>export GITHUB_TOKEN=...
 </span></code></pre></div></p>
 <h3 id="pipelines">Pipelines<a class="headerlink" href="#pipelines" title="Permanent link">&para;</a></h3>
-<p>Stable deployment:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>task build push push-latest push-dockerhub-readme docs:publish
+<h4 id="dev">Dev<a class="headerlink" href="#dev" title="Permanent link">&para;</a></h4>
+<p>Push the dev image to registries: 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># Push on develop channel
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>task push 
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a># Push on develop channel with pre-release
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>task release
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>task push 
 </span></code></pre></div></p>
-<p>Development deployment:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>task build push push-dockerhub-readme docs:publish
+<h4 id="stable">Stable<a class="headerlink" href="#stable" title="Permanent link">&para;</a></h4>
+<p>Stable deployment, only on main branch:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>task release
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>task push-stable
 </span></code></pre></div></p>
 
 

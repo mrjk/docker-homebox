@@ -123,13 +123,12 @@ tasks:
     cmds:
       - ./scripts/dockerhub-update-readme.sh
 
-  release-stable:
+  push-stable:
     desc: release stable version
     preconditions:
       - sh: '[ "{{.BRANCH}}" = "main" ]'
         msg: "Must be on main branch (current: {{.BRANCH}})"
     cmds:
-      - release
       - push
       - push-latest
       - push-dockerhub-readme

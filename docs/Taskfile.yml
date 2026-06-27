@@ -1,37 +1,39 @@
 ---
 # https://taskfile.dev
-
 version: '3'
 
 tasks:
 
-
   list:
-    desc: "Show available commands"
+    desc: "show available commands"
     aliases:
       - default
     silent: true
     cmds:
       - task --list-all
 
-  # Generate
+  # Zensical
   # =============
 
   setup:
     desc: Setup documentation environment
+    status:
+      - command -v zensical
     cmds:
       - uv pip install -r requirements.txt
 
-  # Mkdocs
-  # =============
-
   serve:
     desc: serve mkdoc website locally
+    deps:
+      - setup
     cmds:
       - zensical serve
 
   publish:
     desc: update gh_page branch with new documentation
+    deps:
+      - setup
     cmds:
-      - poetry run mkdocs gh-deploy --force
+      - zensical build
+      - ./pages-deploy.sh
 

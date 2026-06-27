@@ -81,3 +81,9 @@ tasks:
     desc: Setup ci/cd environment
     cmds:
       - uv pip install -r requirements.txt
+
+  release:
+    desc: Make a new release
+    cmds:
+      - semantic-release version
+

@@ -53,7 +53,8 @@ tasks:
       - build
       - login
     cmds:
-      - docker compose push
+      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}"
 
   push-latest:
     desc: Push current image to latest

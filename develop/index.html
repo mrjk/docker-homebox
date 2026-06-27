@@ -333,6 +333,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Quickstart
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#build-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -340,6 +351,45 @@
       </span>
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-and-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Release and publish
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Release and publish">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-vars" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Environment vars
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Pipelines
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -392,6 +442,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Quickstart
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#build-documentation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -399,6 +460,45 @@
       </span>
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#release-and-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Release and publish
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Release and publish">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-vars" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Environment vars
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Pipelines
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -426,12 +526,43 @@
                   
 
 <h1 id="develop">Develop<a class="headerlink" href="#develop" title="Permanent link">&para;</a></h1>
+<p>Requirements:
+* mise
+* direnv
+* running docker and docker compose</p>
+<h2 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h2>
+<p>Clone project:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone git@github.com:mrjk/docker-homebox.git
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd docker-homebox
+</span></code></pre></div></p>
+<p>Allow mise to trust this project:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mise trust
+</span></code></pre></div></p>
+<p>Build docker image:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>task build
+</span></code></pre></div></p>
 <h2 id="build-documentation">Build documentation<a class="headerlink" href="#build-documentation" title="Permanent link">&para;</a></h2>
 <p>To locally run documentation:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cd docs/
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>task setup serve
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cd docs/
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>task setup serve
 </span></code></pre></div>
 Then you can reach documentation on <a href="">http://localhost:8000/</a></p>
+<h2 id="release-and-publish">Release and publish<a class="headerlink" href="#release-and-publish" title="Permanent link">&para;</a></h2>
+<h3 id="environment-vars">Environment vars<a class="headerlink" href="#environment-vars" title="Permanent link">&para;</a></h3>
+<p>Configure environment vars in <code>.envrc</code> or directly in your shell:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>export DOCKERHUB_REPOSITORY=docker-homebox
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>export DOCKERHUB_NAMESPACE=mrjk78
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>export DOCKERHUB_USERNAME=mrjk78
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>export DOCKERHUB_TOKEN=...
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>export GITHUB_TOKEN=...
+</span></code></pre></div></p>
+<h3 id="pipelines">Pipelines<a class="headerlink" href="#pipelines" title="Permanent link">&para;</a></h3>
+<p>Stable deployment:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>task build push push-latest push-dockerhub-readme docs:publish
+</span></code></pre></div></p>
+<p>Development deployment:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>task build push push-dockerhub-readme docs:publish
+</span></code></pre></div></p>
 
 
 

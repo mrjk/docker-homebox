@@ -103,7 +103,7 @@ tasks:
     desc: Make a new release
     aliases:
       - ci-release
-    depends:
+    deps:
       - setup
     cmds:
       - semantic-release version

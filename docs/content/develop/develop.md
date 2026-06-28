@@ -6,6 +6,7 @@ icon: lucide/bug
 # Develop
 
 Requirements:
+
 * mise
 * direnv
 * running docker and docker compose

@@ -47,9 +47,21 @@ docs_dir = "content"
 #
 # Read more: https://zensical.org/docs/setup/navigation/
 nav = [
-  "index.md",
+  {"Welcome" = "index.md"},
+  "intro.md",
   "usage.md",
-  "develop.md",
+
+  {"Develop" = [
+    "develop/develop.md",
+    "develop/pipeline.md",
+    ]
+  },
+  {"About" = [
+    {"Contributing" = "about/CONTRIBUTING.md"},
+    {"Code of Conduct" = "about/CODE_OF_CONDUCT.md"},
+    {"License" = "about/license.md"},
+    ]
+  }
 ]
 
 # With the "extra_css" option you can add your own CSS styling to customize
@@ -350,3 +362,19 @@ combine_header_slug = true
 [project.markdown_extensions.pymdownx.tasklist]
 custom_checkbox = true
 [project.markdown_extensions.pymdownx.tilde]
+
+
+[project.plugins.mkdocstrings.handlers.python]
+#inventories = ["https://docs.python.org/3/objects.inv"]
+paths = [".."]
+
+[project.plugins.mkdocstrings.handlers.python.options]
+docstring_style = "google"
+inherited_members = true
+show_source = true
+show_root_heading = true
+
+
+[project.markdown_extensions.pymdownx.snippets]
+base_path = ['..']
+check_paths = true

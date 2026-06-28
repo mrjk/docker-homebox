@@ -2,6 +2,27 @@
 
 <!-- version list -->
 
+## v1.1.2 (2026-06-28)
+
+### Bug Fixes
+
+- Image versionning major/minor
+  ([`db79ce7`](https://github.com/mrjk/docker-homebox/commit/db79ce7f4e519e576cacca6835b5dfdb2d49dc6f))
+
+### Build System
+
+- Change compose file locations
+  ([`cb82c33`](https://github.com/mrjk/docker-homebox/commit/cb82c33fa996836e1798c502d8de528fcd602816))
+
+### Continuous Integration
+
+- Cleanup taskfil
+  ([`970d1a0`](https://github.com/mrjk/docker-homebox/commit/970d1a078564e02c889f8ace6acd6e13a88ab420))
+
+- Fix bad image reference
+  ([`60732f6`](https://github.com/mrjk/docker-homebox/commit/60732f60bd67034a961415ec4059b65dfd784ef4))
+
+
 ## v1.1.1 (2026-06-28)
 
 ### Bug Fixes

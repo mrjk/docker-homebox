@@ -25,6 +25,14 @@ vars:
   BRANCH:
     sh: git rev-parse --abbrev-ref HEAD
 
+  app_image_version_minor:
+    sh: >
+      echo "${app_image_version%.*}"
+
+  app_image_version_major:
+    sh: >
+      echo "${app_image_version%.*.*}"
+
 
 includes:
   docs:
@@ -60,12 +68,16 @@ tasks:
     desc: Push current image to latest
     aliases:
       - ci-push-latest
-    deps:
-      - build
-      - login
+    #deps:
+    #  - build
+    #  - login
     cmds:
       - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
+      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.app_image_version_minor}}"
+      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.app_image_version_major}}"
       - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.app_image_version_minor}}"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.app_image_version_major}}"
 
   login:
     desc: Login to registry

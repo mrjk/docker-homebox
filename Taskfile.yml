@@ -35,7 +35,7 @@ vars:
 
   VERSION_DATE:
     sh: >
-      date -u +"%Y-%m-%d"
+      date -u +"%Y%m%d"
 
 
 includes:

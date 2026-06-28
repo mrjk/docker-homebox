@@ -158,10 +158,12 @@ tasks:
         msg: "Must be on main branch (current: {{.BRANCH}})"
     cmds:
       - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}-{{.VERSION_DATE}}"
+      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}"
       - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MINOR}}"
       - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MAJOR}}"
       - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
       - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}-{{.VERSION_DATE}}"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}"
       - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MINOR}}"
       - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MAJOR}}"
       - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
@@ -174,7 +176,6 @@ tasks:
       - sh: '[ "{{.BRANCH}}" = "main" ]'
         msg: "Must be on main branch (current: {{.BRANCH}})"
     cmds:
-      - task: push
       - task: push-latest
       - task: push-dockerhub-readme
       - task: docs:publish

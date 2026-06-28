@@ -42,7 +42,8 @@ branch_exists() {
     git show-ref \
         --verify \
         --quiet \
-        "refs/heads/${PAGES_BRANCH}"
+        "refs/heads/${PAGES_BRANCH}" || \
+    git show-ref --verify --quiet "refs/remotes/origin/${PAGES_BRANCH}"
 }
 
 create_orphan_branch() {
@@ -64,6 +65,8 @@ create_orphan_branch() {
 sync_site() {
     (
         cd "${WORKTREE_DIR}"
+
+        git pull
 
         find . \
             -mindepth 1 \

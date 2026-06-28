@@ -2,6 +2,37 @@
 
 <!-- version list -->
 
+## v1.2.0 (2026-06-28)
+
+### Bug Fixes
+
+- Minor ci tasks
+  ([`09fcb25`](https://github.com/mrjk/docker-homebox/commit/09fcb25281721d7a58c25d94e4bd1d322cb13a5b))
+
+- Missing licenses and code of conduct
+  ([`be5d2a5`](https://github.com/mrjk/docker-homebox/commit/be5d2a57205e6420d40c71de6dfbb74472bd47de))
+
+### Build System
+
+- Fix doc publishing script
+  ([`d46bced`](https://github.com/mrjk/docker-homebox/commit/d46bced337453e6486473313545041fece529f96))
+
+### Continuous Integration
+
+- Add date version to image build
+  ([`959ab74`](https://github.com/mrjk/docker-homebox/commit/959ab74d64fcb99218aa53598e700ad8c2092a50))
+
+### Documentation
+
+- Update docs
+  ([`341af74`](https://github.com/mrjk/docker-homebox/commit/341af74ee06df3541f6b5cee8f8b4b75d77ea6ba))
+
+### Features
+
+- Improve versionning
+  ([`a160c94`](https://github.com/mrjk/docker-homebox/commit/a160c943564240db29abbda9c3215f4622cf5f9a))
+
+
 ## v1.1.2 (2026-06-28)
 
 ### Bug Fixes

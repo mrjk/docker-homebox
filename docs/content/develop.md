@@ -23,24 +23,39 @@ Allow mise to trust this project:
 mise trust
 ```
 
+### Local build
+
 Build docker image:
 ```
 task build
 ```
 
-
-## Build documentation
+### Documentation build
 
 To locally run documentation:
 ```
-cd docs/
-task setup serve
+task docs:serve
 ```
 Then you can reach documentation on [http://localhost:8000/]()
 
-## Release and publish
 
-### Environment vars
+## Releasing and publishing
+
+The releasing and publishing process is handled with Task. Pipeline is quite simple. Development branches only push docker images, stable deployment update documentation and dockerhub readme.
+
+### Dev
+
+Push the dev image to registries: 
+```
+# Push on develop channel, without release
+task push 
+
+# Push on develop channel with pre-release
+task release
+task push 
+```
+
+### Stable
 
 Configure environment vars in `.envrc` or directly in your shell:
 ```
@@ -51,22 +66,6 @@ export DOCKERHUB_TOKEN=...
 export GITHUB_TOKEN=...
 ```
 
-### Pipelines
-
-
-#### Dev
-
-Push the dev image to registries: 
-```
-# Push on develop channel
-task push 
-
-# Push on develop channel with pre-release
-task release
-task push 
-```
-
-#### Stable
 Stable deployment, only on main branch:
 ```
 task release

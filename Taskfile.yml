@@ -3,6 +3,12 @@
 version: '3'
 
 env:
+
+  # Docker configuration
+  DOCKER_CONFIG: .tmp/docker-auth
+  COMPOSE_PROGRESS: plain
+
+  # Compose env vars
   app_image_build_date:
     sh: >
       date -u +"%Y-%m-%dT%H:%M:%SZ"
@@ -12,12 +18,6 @@ env:
   app_image_commit:
     sh: > 
       git rev-parse --short HEAD
-
-  DOCKER_CONFIG: .tmp/docker-auth
-
-  #VERSION:
-  #  sh: semantic-release version --print-last-released
-
   app_image_version:
     sh: semantic-release version --print-tag
 
@@ -25,11 +25,11 @@ vars:
   BRANCH:
     sh: git rev-parse --abbrev-ref HEAD
 
-  app_image_version_minor:
+  VERSION_MINOR:
     sh: >
       echo "${app_image_version%.*}"
 
-  app_image_version_major:
+  VERSION_MAJOR:
     sh: >
       echo "${app_image_version%.*.*}"
 
@@ -46,70 +46,25 @@ tasks:
       - task --list-all
     silent: true
 
-  # Build commands
+  # Local commands
   # =========================
+
+  env:
+    desc: Show compose environment vars
+    cmds:
+      - 'docker compose config --environment'
+
+  config:
+    desc: Show compose config
+    cmds:
+      - docker compose config
+
   build:
     desc: Build images
     cmds:
       - docker compose --progress plain build
 
-  push:
-    desc: Push images
-    aliases:
-      - ci-push
-    deps:
-      - build
-      - login
-    cmds:
-      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}"
-      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}"
-
-  push-latest:
-    desc: Push current image to latest
-    aliases:
-      - ci-push-latest
-    #deps:
-    #  - build
-    #  - login
-    cmds:
-      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
-      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.app_image_version_minor}}"
-      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.app_image_version_major}}"
-      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
-      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.app_image_version_minor}}"
-      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.app_image_version_major}}"
-
-  login:
-    desc: Login to registry
-    silent: true
-    if: "[ ! -f $DOCKER_CONFIG/config.json ]"
-    cmds:
-      - |
-        mkdir -p "$DOCKER_CONFIG"
-        echo "$DOCKERHUB_TOKEN" | docker login \
-        --username "$DOCKERHUB_USERNAME" \
-        --password-stdin
-  logout:
-    desc: Logout from registry
-    cmds:
-      - rm -f "$DOCKER_CONFIG/config.json"
-
-
-  # Info commands
-  # =========================
-
-  env:
-    cmds:
-      - 'docker compose config --environment'
-
-  config:
-    desc: Show stack config
-    cmds:
-      - docker compose config
-
-
-
-  # CI/DC commands
+  # CI/CD commands
   # =========================
 
   setup:
@@ -129,15 +84,73 @@ tasks:
       - semantic-release version
       - git push
 
+
+  # Remote - DockerHub
+  # =========================
+
+  login:
+    desc: Login to registry
+    silent: true
+    if: "[ ! -f $DOCKER_CONFIG/config.json ]"
+    cmds:
+      - |
+        mkdir -p "$DOCKER_CONFIG"
+        echo "$DOCKERHUB_TOKEN" | docker login \
+        --username "$DOCKERHUB_USERNAME" \
+        --password-stdin
+
+  logout:
+    desc: Logout from registry
+    cmds:
+      - rm -f "$DOCKER_CONFIG/config.json"
+
+
+  # Remote - Dev Releases
+  # =========================
+
+  push:
+    desc: Push images on remote registry
+    aliases:
+      - ci-push
+    deps:
+      - build
+      - login
+    cmds:
+      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-${app_image_version}"
+
+
+  # Remote - Stable Releases
+  # =========================
+
   push-dockerhub-readme:
     desc: Push dockerhub readme
-    aliases:
-      - ci-push-readme
+    preconditions:
+      - sh: '[ "{{.BRANCH}}" = "main" ]'
+        msg: "Must be on main branch (current: {{.BRANCH}})"
     cmds:
       - ./scripts/dockerhub-update-readme.sh
 
+  push-latest:
+    desc: Push current image tags to registry
+    deps:
+      - build
+      - login
+    preconditions:
+      - sh: '[ "{{.BRANCH}}" = "main" ]'
+        msg: "Must be on main branch (current: {{.BRANCH}})"
+    cmds:
+      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
+      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MINOR}}"
+      - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MAJOR}}"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MINOR}}"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MAJOR}}"
+
   push-stable:
     desc: release stable version
+    aliases:
+      - ci-release-stable
     preconditions:
       - sh: '[ "{{.BRANCH}}" = "main" ]'
         msg: "Must be on main branch (current: {{.BRANCH}})"

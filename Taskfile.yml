@@ -143,9 +143,9 @@ tasks:
       - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
       - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MINOR}}"
       - docker tag "homebox:debian-13-${app_image_version}" "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MAJOR}}"
-      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
       - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MINOR}}"
       - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-{{.VERSION_MAJOR}}"
+      - docker push "$DOCKERHUB_NAMESPACE/$DOCKERHUB_REPOSITORY:debian-13-latest"
 
   push-stable:
     desc: release stable version

@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.2.1 (2026-06-28)
+
+### Bug Fixes
+
+- Build date format
+  ([`56fbf74`](https://github.com/mrjk/docker-homebox/commit/56fbf7483c3279347a620e2162ceb5ad1e579422))
+
+
 ## v1.2.0 (2026-06-28)
 
 ### Bug Fixes

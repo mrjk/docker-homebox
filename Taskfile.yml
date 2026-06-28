@@ -88,6 +88,19 @@ tasks:
       - semantic-release version
       - git push
 
+  versions:
+    desc: Show current and next version
+    silent: true
+    deps:
+      - task: setup
+        silent: true
+    vars:
+      current:
+        sh: semantic-release version --print-last-released-tag
+    cmds:
+      - 'echo "Current version: {{.current}}"'
+      - 'echo "Next version: $app_image_version"'
+
 
   # Remote - DockerHub
   # =========================

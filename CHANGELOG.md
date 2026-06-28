@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v1.2.2 (2026-06-28)
+
+### Bug Fixes
+
+- Image push ordering
+  ([`37ab2fa`](https://github.com/mrjk/docker-homebox/commit/37ab2facb317a44eaaca783c11f9319589a9c74d))
+
+
 ## v1.2.1 (2026-06-28)
 
 ### Bug Fixes

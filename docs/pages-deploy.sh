@@ -8,6 +8,7 @@ readonly WORKTREE_DIR="${WORKTREE_DIR:-.tmp-gh-pages}"
 
 main() {
     check_requirements
+    configure_git_identity
     prepare_worktree
     sync_site
     commit_changes
@@ -25,6 +26,25 @@ check_requirements() {
         echo "site directory not found: ${SITE_DIR}" >&2
         exit 1
     }
+}
+
+configure_git_identity() {
+    local name="${GIT_AUTHOR_NAME:-${GIT_COMMITTER_NAME:-${GITHUB_ACTOR:-}}}"
+    local email="${GIT_AUTHOR_EMAIL:-${GIT_COMMITTER_EMAIL:-}}"
+
+    if [ -z "${email}" ] && [ -n "${GITHUB_ACTOR:-}" ]; then
+        email="${GITHUB_ACTOR}@users.noreply.github.com"
+    fi
+
+    if [ -z "${name}" ] || [ -z "${email}" ]; then
+        echo "git identity required: set GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL" >&2
+        exit 1
+    fi
+
+    export GIT_AUTHOR_NAME="${name}"
+    export GIT_AUTHOR_EMAIL="${email}"
+    export GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-${name}}"
+    export GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-${email}}"
 }
 
 prepare_worktree() {

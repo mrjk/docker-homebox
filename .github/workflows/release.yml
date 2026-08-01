@@ -25,6 +25,8 @@ jobs:
       DOCKERHUB_NAMESPACE: ${{ vars.DOCKERHUB_NAMESPACE || secrets.DOCKERHUB_NAMESPACE || vars.DOCKERHUB_USERNAME || secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_REPOSITORY: ${{ github.event.repository.name }}
       PAGES_BRANCH: doc-pages
+      GIT_AUTHOR_NAME: ${{ github.actor }}
+      GIT_AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
     steps:
       - name: Clone repository
         run: |

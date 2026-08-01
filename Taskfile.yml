@@ -12,14 +12,16 @@ env:
   app_image_build_date:
     sh: >
       date -u +"%Y-%m-%dT%H:%M:%SZ"
-  app_image_version:
-    sh: > 
-      git symbolic-ref --short -q HEAD || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD
   app_image_commit:
     sh: > 
       git rev-parse --short HEAD
   app_image_version:
-    sh: semantic-release version --print-tag
+    sh: >
+      if command -v semantic-release >/dev/null 2>&1; then
+        semantic-release version --print-tag
+      else
+        git symbolic-ref --short -q HEAD || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD
+      fi
 
 vars:
   BRANCH:

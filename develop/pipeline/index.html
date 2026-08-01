@@ -489,6 +489,67 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-docker-hub-access-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. Docker Hub access token
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-github-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. GitHub Environment
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-environment-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. Environment secret
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. Environment variables
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. Verify
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -735,6 +796,67 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-docker-hub-access-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. Docker Hub access token
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-github-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. GitHub Environment
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-environment-secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. Environment secret
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. Environment variables
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. Verify
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -969,33 +1091,72 @@ as environment variables. There must be a 1 to 1 CI functionality parity:</p>
 <li>Publish: Run CI and publish artifacts</li>
 </ul>
 <h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
-<p>Dockerhub config:</p>
+<p>Docker Hub auth for the Release workflow uses the GitHub Environment <code>release-publish</code>.
+<code>DOCKERHUB_TOKEN</code> is injected only on push / Hub README steps, not on docs build.</p>
+<h3 id="1-docker-hub-access-token">1. Docker Hub access token<a class="headerlink" href="#1-docker-hub-access-token" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Go to <code>Account/Settings</code></li>
-<li>Go to <code>Personal Access Tokens</code></li>
-<li>Create a new access token<ul>
+<li>Open <a href="https://hub.docker.com/">Docker Hub</a> -&gt; Account Settings -&gt; Personal access tokens</li>
+<li>Create a token</li>
 <li>Description: <code>gh-action-&lt;PROJECT_NAME&gt;</code></li>
-<li>Scopes: Read, Write, Delete</li>
-<li>Save token for later use in Github</li>
-</ul>
-</li>
+<li>Access permissions: Read, Write, Delete</li>
+<li>Copy the token (shown once)</li>
 </ol>
-<p>Github config:</p>
+<h3 id="2-github-environment">2. GitHub Environment<a class="headerlink" href="#2-github-environment" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Go to project <code>Settings</code></li>
-<li>Go to <code>Secrets and variables/Actions</code></li>
-<li>Create <code>New repository secret</code><ul>
-<li>Name: <code>DOCKERHUB_TOKEN</code></li>
-<li>Secret: Get from dockerhub</li>
-</ul>
-</li>
-<li>Create <code>New repository variable</code><ul>
-<li>Name: <code>DOCKERHUB_USERNAME</code></li>
-<li>Value: Your dockerhub user</li>
-</ul>
-</li>
+<li>Open the GitHub repo -&gt; Settings -&gt; Environments</li>
+<li>Create environment named exactly: <code>release-publish</code></li>
+<li>Optional hardening:</li>
+<li>Deployment branches: only <code>main</code> (and <code>dev</code> if you publish from there)</li>
+<li>Required reviewers: if you want a human gate before Hub push</li>
 </ol>
-<p>Then you should be able to run github actions on dockerhub.</p>
+<h3 id="3-environment-secret">3. Environment secret<a class="headerlink" href="#3-environment-secret" title="Permanent link">&para;</a></h3>
+<p>Still on Environment <code>release-publish</code> -&gt; Environment secrets:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DOCKERHUB_TOKEN</code></td>
+<td>Docker Hub access token from step 1</td>
+</tr>
+</tbody>
+</table>
+<p>Do not put <code>DOCKERHUB_TOKEN</code> in repository Actions secrets (avoid duplicate / accidental job-wide use).</p>
+<h3 id="4-environment-variables">4. Environment variables<a class="headerlink" href="#4-environment-variables" title="Permanent link">&para;</a></h3>
+<p>Still on Environment <code>release-publish</code> -&gt; Environment variables:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DOCKERHUB_USERNAME</code></td>
+<td>Docker Hub username that owns the token</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>DOCKERHUB_NAMESPACE</code></td>
+<td>Hub namespace / org for image path (<code>namespace/repo</code>)</td>
+<td>No (defaults to username)</td>
+</tr>
+</tbody>
+</table>
+<p><code>DOCKERHUB_REPOSITORY</code> is set by the workflow to the GitHub repo name.</p>
+<h3 id="5-verify">5. Verify<a class="headerlink" href="#5-verify" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Ensure the Hub repository <code>DOCKERHUB_NAMESPACE/&lt;github-repo-name&gt;</code> exists (or can be created by that user)</li>
+<li>Run Actions -&gt; Release -&gt; Run workflow on <code>main</code> or <code>dev</code></li>
+<li>Confirm image push and (on <code>main</code>) Hub README update</li>
+</ol>
+<p>CI workflow does not receive Docker Hub credentials.</p>
 
 
 

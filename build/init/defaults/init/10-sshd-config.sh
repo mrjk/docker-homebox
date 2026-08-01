@@ -10,6 +10,11 @@ log ()
 }
 
 
+if [[ "${HOMEBOX_SSH_ENABLE:-true}" != true ]]; then
+  log INFO "SSH server disabled (HOMEBOX_SSH_ENABLE=${HOMEBOX_SSH_ENABLE:-false})"
+  exit 0
+fi
+
 ensure_ssh_host_keys () {
   # Generate SSH host keys if they don't exist
   if [ ! -f /etc/ssh/ssh_host_rsa_key ]; then

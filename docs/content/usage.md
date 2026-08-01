@@ -140,7 +140,32 @@ with:
 
 The container automatically configures OpenSSH.
 
-Startup actions:
+### HOMEBOX_SSH_ENABLE
+
+Enable or disable the OpenSSH server.
+
+Default:
+
+```bash
+HOMEBOX_SSH_ENABLE=true
+```
+
+Example (disable SSH, keep the container alive):
+
+```bash
+HOMEBOX_SSH_ENABLE=false
+```
+
+When set to `false`:
+
+* OpenSSH host-key and config init is skipped.
+* The `sshd` Supervisor program is not started.
+* If no other Supervisor services remain, the container runs `sleep infinity`.
+* User setup and `~/.config/homebox/init.sh` still run as usual.
+
+Attach with `docker exec` instead of SSH when the server is disabled.
+
+Startup actions (when enabled):
 
 1. Verify `/etc/ssh/sshd_config` exists.
 2. Restore default configuration if missing.
@@ -296,8 +321,9 @@ The initialization process executes in the following order:
  └─ Run ~/.config/homebox/init.sh
 
 Supervisor
- └─ Start sshd
+ └─ Start sshd (skipped when HOMEBOX_SSH_ENABLE=false)
 ```
+
 
 ## Security Notes
 

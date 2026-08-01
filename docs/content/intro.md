@@ -16,6 +16,7 @@ This project focus on providing a simple OpenSSH server. Then, you can customize
 * SSH configuration:
     * SSH hosts keys persistance
     * Automatically provision user SSH key, with URL support, to load your github keys
+    * Optional disable via `HOMEBOX_SSH_ENABLE=false` (falls back to `sleep infinity`)
     * Provide custom SSH port, when using with host network mode (TODO)
 * Customizable package installation
     * During runtime or at build time

@@ -158,6 +158,27 @@ minit_pid1_supervisor () {
   title "Loading services files (supervisor)"
   mapfile -t files < <(find_configs "$MINIT_DEFAULT_DIR/services:$MINIT_OVERRIDE_DIR/services" "*.conf")
 
+  # Optionally disable SSH server services
+  if [[ "${HOMEBOX_SSH_ENABLE:-true}" != true ]]; then
+    local filtered=()
+    for file in "${files[@]}"; do
+      local basename="${file##*/}"
+      if [[ "$basename" == *sshd* ]]; then
+        log INFO "Skipping supervisor service (SSH disabled): $file"
+        continue
+      fi
+      filtered+=("$file")
+    done
+    files=("${filtered[@]+"${filtered[@]}"}")
+  fi
+
+  # No services left: keep container alive without supervisord
+  if [[ ${#files[@]} -eq 0 ]]; then
+    log INFO "No supervisor services to start, falling back to sleep infinity"
+    minit_pid1_sleep
+    return
+  fi
+
   # Generate supervisord config
   local supervisor_conf=/etc/supervisor.conf
   #cp /usr/local/init/supervisord.conf "$supervisor_conf"

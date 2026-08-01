@@ -111,6 +111,11 @@ tasks:
     desc: Login to registry
     silent: true
     if: "[ ! -f $DOCKER_CONFIG/config.json ]"
+    preconditions:
+      - sh: '[ -n "$DOCKERHUB_USERNAME" ]'
+        msg: "Missing DOCKERHUB_USERNAME"
+      - sh: '[ -n "$DOCKERHUB_TOKEN" ]'
+        msg: "Missing DOCKERHUB_TOKEN"
     cmds:
       - |
         mkdir -p "$DOCKER_CONFIG"

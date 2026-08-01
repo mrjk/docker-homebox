@@ -74,26 +74,52 @@ On github UI, you can run two jobs on any branches:
 
 ## Setup
 
-Dockerhub config:
+Docker Hub auth for the Release workflow uses the GitHub Environment `release-publish`.
+`DOCKERHUB_TOKEN` is injected only on push / Hub README steps, not on docs build.
 
-1. Go to `Account/Settings`
-* Go to `Personal Access Tokens`
-* Create a new access token
-    * Description: `gh-action-<PROJECT_NAME>`
-    * Scopes: Read, Write, Delete
-    * Save token for later use in Github
+### 1. Docker Hub access token
 
-Github config:
+1. Open [Docker Hub](https://hub.docker.com/) -> Account Settings -> Personal access tokens
+2. Create a token
+   * Description: `gh-action-<PROJECT_NAME>`
+   * Access permissions: Read, Write, Delete
+3. Copy the token (shown once)
 
-1. Go to project `Settings`
-* Go to `Secrets and variables/Actions`
-* Create `New repository secret`
-    * Name: `DOCKERHUB_TOKEN`
-    * Secret: Get from dockerhub
-* Create `New repository variable`
-    * Name: `DOCKERHUB_USERNAME`
-    * Value: Your dockerhub user
+### 2. GitHub Environment
 
-Then you should be able to run github actions on dockerhub.
+1. Open the GitHub repo -> Settings -> Environments
+2. Create environment named exactly: `release-publish`
+3. Optional hardening:
+   * Deployment branches: only `main` (and `dev` if you publish from there)
+   * Required reviewers: if you want a human gate before Hub push
+
+### 3. Environment secret
+
+Still on Environment `release-publish` -> Environment secrets:
+
+| Name | Value |
+| ---- | ----- |
+| `DOCKERHUB_TOKEN` | Docker Hub access token from step 1 |
+
+Do not put `DOCKERHUB_TOKEN` in repository Actions secrets (avoid duplicate / accidental job-wide use).
+
+### 4. Environment variables
+
+Still on Environment `release-publish` -> Environment variables:
+
+| Name | Value | Required |
+| ---- | ----- | -------- |
+| `DOCKERHUB_USERNAME` | Docker Hub username that owns the token | Yes |
+| `DOCKERHUB_NAMESPACE` | Hub namespace / org for image path (`namespace/repo`) | No (defaults to username) |
+
+`DOCKERHUB_REPOSITORY` is set by the workflow to the GitHub repo name.
+
+### 5. Verify
+
+1. Ensure the Hub repository `DOCKERHUB_NAMESPACE/<github-repo-name>` exists (or can be created by that user)
+2. Run Actions -> Release -> Run workflow on `main` or `dev`
+3. Confirm image push and (on `main`) Hub README update
+
+CI workflow does not receive Docker Hub credentials.
 
 

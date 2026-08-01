@@ -18,10 +18,10 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    environment: release-publish
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME || secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       DOCKERHUB_NAMESPACE: ${{ vars.DOCKERHUB_NAMESPACE || secrets.DOCKERHUB_NAMESPACE || vars.DOCKERHUB_USERNAME || secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_REPOSITORY: ${{ github.event.repository.name }}
       PAGES_BRANCH: doc-pages
@@ -50,10 +50,14 @@ jobs:
 
       - name: Push Docker image(s)
         if: success()
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: mise x -- task push
 
       - name: Push latest tag
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v.')
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: mise x -- task push-latest
 
       - name: Publish documentation
@@ -62,4 +66,6 @@ jobs:
 
       - name: Update Dockerhub README
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v.')
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: mise x -- task push-dockerhub-readme

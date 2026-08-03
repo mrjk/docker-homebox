@@ -2,6 +2,34 @@
 
 <!-- version list -->
 
+## v1.3.0 (2026-08-03)
+
+### Continuous Integration
+
+- Change secrets
+  ([`f088296`](https://github.com/mrjk/docker-homebox/commit/f0882965f59e05718ed00b5be0ba07be9ab5bcb7))
+
+- Fix documentation release process
+  ([`d7a3191`](https://github.com/mrjk/docker-homebox/commit/d7a31917df2c133b91ccd37f499929cc2d639278))
+
+- Fix failed CI gh action
+  ([`8132b59`](https://github.com/mrjk/docker-homebox/commit/8132b59cfb81c887041b10ddc440931f7cf9b465))
+
+- Fix release pipeline
+  ([`df5095f`](https://github.com/mrjk/docker-homebox/commit/df5095f66176b99062dca26b8febc604124f43d8))
+
+- Try to fix release
+  ([`76d069d`](https://github.com/mrjk/docker-homebox/commit/76d069da96e2b178a9044ede7bd1231e7d0b4b9d))
+
+- Update mise action
+  ([`e2367e2`](https://github.com/mrjk/docker-homebox/commit/e2367e23c412dfc667d5f6536068ecbf41d70a1a))
+
+### Features
+
+- Add option to disable ssh server
+  ([`a247c85`](https://github.com/mrjk/docker-homebox/commit/a247c8501d4ed2f7d6db044efdb231f31cf66285))
+
+
 ## v1.2.2 (2026-06-28)
 
 ### Bug Fixes
